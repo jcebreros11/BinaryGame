@@ -5,9 +5,10 @@ function App() {
 
   const min = 0; 
   const max = 255;
-
+  const temp = 0;
   const randomBinary = () => {
-     return Math.floor(min + Math.random() * (max + 1 - min)).toString(2);
+      temp = Math.floor(min + Math.random() * (max + 1 - min)).toString(2);
+      return temp;
   };
  
   const [binaryNumber, setBinaryNumber] = useState(randomBinary());
@@ -18,7 +19,13 @@ function App() {
     console.log(input.target.value);
   }
 
-  const handleSubmit = (ans) => {
+    const handleSubmit = () => {
+        answer = answer.toString(2);
+        if (answer == temp) {
+            console.log("Right")
+        } else {
+            console.log("Wrong")
+        }
     return null;
   }
 
