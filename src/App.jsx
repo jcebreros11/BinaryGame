@@ -1,47 +1,68 @@
-import { useState } from 'react'
-import './App.css'
+import { useState, useEffect } from 'react'
+import './styles/App.css'
 
 function App() {
 
   const min = 0; 
   const max = 255;
-  const temp = 0;
   const randomBinary = () => {
-      temp = Math.floor(min + Math.random() * (max + 1 - min)).toString(2);
-      return temp;
+      return Math.floor(min + Math.random() * (max + 1 - min)).toString(2);
   };
- 
-  const [binaryNumber, setBinaryNumber] = useState(randomBinary());
-  const [answer, setAnswer] = useState(); 
+
+
+
+  const [binaryNumber, setBinaryNumber] = useState(undefined);
+  const [answer, setAnswer] = useState(undefined); 
+  const [isCorrect, setIsCorrect] = useState(undefined); 
+  const [countDown, setCountDown] = useState(2); 
+
+  useEffect(() => {
+    setBinaryNumber(randomBinary());
+  }, []);
+
+  useEffect(() => {
+    setTimeout(() => {
+      setCountDown(countDown-1);
+    }, 1000);   
+  });
+
+  useEffect(() => {
+    if(countDown === 0){
+      alert("Times Up!");
+    }
+  }, [countDown]);
 
   const handleChange = (input) => {
     setAnswer(input.target.value);
-    console.log(input.target.value);
   }
 
     const handleSubmit = () => {
-        answer = answer.toString(2);
-        if (answer == temp) {
-            console.log("Right")
-        } else {
-            console.log("Wrong")
-        }
-    return null;
+      const isValid =  parseInt(answer).toString(2) === binaryNumber;
+      setIsCorrect(isValid);
   }
 
   return (
     <>
-      <div><h1>BinaryGame</h1></div>
-      <div><h2>{binaryNumber}</h2></div>
-      <form>
-        <label>Answer:</label>
-        <input type="text" onChange={handleChange}/>
-      </form>
-      <button
+      <div className="container"><h1>BinaryGame</h1>
+        <div className="binaryContainer"><h2>{binaryNumber}</h2></div>
+        <form>
+          <label>Answer:</label>
+          <input type="number" onChange={handleChange}/>
+        </form>
+        <button
 					type="button"
+          disabled = {answer === undefined ? true : false}
 					onClick={handleSubmit}>
             Submit
 				</button>
+      </div>
+      <div style={{ display: isCorrect !== undefined ? 'block' : 'none' }}>
+        {isCorrect? 
+          <h2>Correct</h2> 
+          : <h2>Wrong</h2> 
+        }
+      </div>
+
     </>
   )
 }
