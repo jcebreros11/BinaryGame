@@ -4,7 +4,7 @@ import './styles/App.css'
 function App() {
 
   const min = 0; 
-  const max = 255;
+  const max = 16;
   const randomBinary = () => {
       return Math.floor(min + Math.random() * (max + 1 - min)).toString(2);
   };
@@ -14,7 +14,7 @@ function App() {
   const [binaryNumber, setBinaryNumber] = useState(undefined);
   const [answer, setAnswer] = useState(undefined); 
   const [isCorrect, setIsCorrect] = useState(undefined); 
-  const [countDown, setCountDown] = useState(2); 
+  const [countDown, setCountDown] = useState(5); 
 
   useEffect(() => {
     setBinaryNumber(randomBinary());
@@ -40,6 +40,15 @@ function App() {
       const isValid =  parseInt(answer).toString(2) === binaryNumber;
       setIsCorrect(isValid);
   }
+
+  useEffect(() => {
+    if(isCorrect){
+      setBinaryNumber(randomBinary());
+      //setIsCorrect(undefined);
+
+    }
+
+  }, [isCorrect])
 
   return (
     <>
