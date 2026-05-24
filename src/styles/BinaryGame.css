@@ -39,3 +39,39 @@
     align-items: center;
     gap: 12px;
 }
+
+.binaryNumber {
+    font-size: 80px;
+    word-break: break-word;
+}
+
+
+@media (max-width: 600px) {
+    .binaryContainer {
+        width: 95%;
+        padding: 16px;
+    }
+
+    .binaryContainer h1 {
+        font-size: 48px;
+    }
+
+    .userInput {
+        flex-direction: column;
+        gap: 16px;
+    }
+
+    .userInput input,
+    .btnAct {
+        width: 100%;
+        max-width: 280px;
+        font-size: 18px;
+    }
+
+    .time-score {
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+        align-items: center;
+    }
+}

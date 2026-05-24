@@ -5,7 +5,7 @@ import '../styles/BinaryGame.css'
 
 function BinaryGame() {
     const min = 0;
-    const max = 20;
+    const max = 100;
     const randomBinary = () => {
         return Math.floor(min + Math.random() * (max + 1 - min)).toString(2);
     };
@@ -36,6 +36,10 @@ function BinaryGame() {
         if (isSubmit) {
             const isValid = parseInt(answer).toString(2) === binaryNumber;
             setIsCorrect(isValid);
+
+            if (isValid) {
+                setResetTimer(prev => prev + 1);
+            }
         } else {
             generateNewNumber();
             setIsTimeOut(false);
@@ -64,7 +68,7 @@ function BinaryGame() {
     return (
         <>
             <div className="binaryContainer">
-                <h1 style={{ fontSize: '80px' }}>{binaryNumber}</h1>
+                <h1 id="binaryNumber">{binaryNumber}</h1>
                 <div className="answer-form">
                     <form onSubmit={handleSubmit}>
                         <div className="userInput">
@@ -100,7 +104,9 @@ function BinaryGame() {
                 <div className="time-score">
                     <CountDown
                         onTimeOut={handleTimeout}
-                        resetTrigger={resetTimer} />
+                        resetTrigger={resetTimer}
+                        isCorrect={isCorrect}
+                    />
                     <ScoreBoard isCorrect={isCorrect}
                         onNextRound={generateNewNumber}
                         isTimeOut={isTimeOut}
