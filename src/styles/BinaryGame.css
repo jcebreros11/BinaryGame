@@ -1,0 +1,35 @@
+.binaryContainer{
+    justify-items: center;
+    border-style: solid;
+    border-color: green;
+    color: white;
+    margin: 0 auto;
+    width: 80%; 
+    height: 100%;
+    max-width: 600px; 
+    padding: 30px;
+}
+
+
+.time-score{
+    display: flex;
+    flex-direction: row;        
+    justify-content: space-between; 
+    align-items: flex-end;
+    gap: 40px;
+}
+
+
+#answerInputId {
+  padding: 12px;
+  border-radius: 8px; 
+
+}
+
+#submitBtnId {
+  padding: 12px 24px;
+  color: white;
+  font-weight: bold;
+  background-color: rgb(74 80 91);
+  border-radius: 8px; 
+}
