@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react'
 import ScoreBoard from './ScoreBoard';
 import CountDown from './CountDown';
-import '../styles/Binarygame.css'
+import '../styles/BinaryGame.css'
 
 function BinaryGame() {
     const min = 0;
