@@ -33,3 +33,9 @@
   background-color: rgb(74 80 91);
   border-radius: 8px; 
 }
+
+.userInput {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}

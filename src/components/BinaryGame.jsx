@@ -67,33 +67,35 @@ function BinaryGame() {
                 <h1 style={{ fontSize: '80px' }}>{binaryNumber}</h1>
                 <div className="answer-form">
                     <form onSubmit={handleSubmit}>
-                        <input id="answerInputId" type="number" onChange={handleChange} disabled={isTimeOut} />
-                        {
-                            !isTimeOut ?
-                                <button
-                                    id="submitBtnId"
-                                    className="btnAct"
-                                    type="submit"
-                                    disabled={isBtnDisabled}
-                                    style={{
-                                        backgroundColor: isBtnDisabled ? '#666' : 'green',
-                                        cursor: isBtnDisabled ? 'not-allowed' : 'pointer',
-                                    }}>
-                                    Submit
-                                </button> :
-                                <button
-                                    id="restartBtnId"
-                                    className="btnAct"
-                                    type="submit"
-                                    style={{
-                                        backgroundColor: 'green',
-                                        cursor: 'pointer',
-                                    }}>
-                                    Restart
-                                </button>
-                        }
+                        <div className="userInput">
+                            <input id="answerInputId" type="number" onChange={handleChange} disabled={isTimeOut} />
+                            {
+                                !isTimeOut ?
+                                    <button
+                                        id="submitBtnId"
+                                        className="btnAct"
+                                        type="submit"
+                                        disabled={isBtnDisabled}
+                                        style={{
+                                            backgroundColor: isBtnDisabled ? '#666' : 'green',
+                                            cursor: isBtnDisabled ? 'not-allowed' : 'pointer',
+                                        }}>
+                                        Submit
+                                    </button> :
+                                    <button
+                                        id="restartBtnId"
+                                        className="btnAct"
+                                        type="submit"
+                                        style={{
+                                            backgroundColor: 'green',
+                                            cursor: 'pointer',
+                                        }}>
+                                        Restart
+                                    </button>
+                            }
+                        </div>
                     </form>
-                </div>
+                </div >
 
                 <div className="time-score">
                     <CountDown
@@ -106,7 +108,7 @@ function BinaryGame() {
                         resetTrigger={resetScore} />
                 </div>
 
-            </div>
+            </div >
         </>
     )
 
