@@ -3,6 +3,7 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import ScoreBoard from '../components/ScoreBoard';
 import CountDown from '../components/CountDown';
 import '../styles/BinaryGame.css'
+import vibrationUtils from '../utils/vibrationUtils';
 
 function BinaryGame() {
     const navigate = useNavigate();
@@ -21,6 +22,7 @@ function BinaryGame() {
     const [isTimeOut, setIsTimeOut] = useState(false);
     const [resetTimer, setResetTimer] = useState(0);
     const [resetScore, setResetScore] = useState(0);
+    const { vibrate } = vibrationUtils();
 
     useEffect(() => {
         setBinaryNumber(randomBinary());
@@ -42,7 +44,10 @@ function BinaryGame() {
             setIsCorrect(isValid);
 
             if (isValid) {
+                vibrate(80);
                 setResetTimer(prev => prev + 1);
+            } else {
+                vibrate([120, 80, 120]);
             }
         } else {
             generateNewNumber();
@@ -62,6 +67,7 @@ function BinaryGame() {
     }
 
     const handleTimeout = () => {
+        vibrate([200, 100, 200]);
         setIsCorrect(undefined);
         setIsBtnDisabled(true);
         setIsTimeOut(true);
