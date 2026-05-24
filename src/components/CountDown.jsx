@@ -4,17 +4,11 @@ import '../styles/CountDown.css'
 
 function CountDown({ onTimeOut, resetTrigger }) {
 
-    const [countDown, setCountDown] = useState(5);
+    const [countDown, setCountDown] = useState(20);
     const [isTimeUp, setIsTimeUp] = useState(false);
 
-    // useEffect(() => {
-    //     setTimeout(() => {
-    //         setCountDown(countDown - 1);
-    //     }, 1000);
-    // });
-
     useEffect(() => {
-        setCountDown(5);
+        setCountDown(20);
         setIsTimeUp(false);
     }, [resetTrigger]);
 
