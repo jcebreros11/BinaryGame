@@ -2,20 +2,38 @@ import { useState, useEffect } from 'react'
 import '../styles/CountDown.css'
 
 
-function CountDown() {
+function CountDown({ onTimeOut, resetTrigger }) {
 
-    const [countDown, setCountDown] = useState(30);
+    const [countDown, setCountDown] = useState(5);
     const [isTimeUp, setIsTimeUp] = useState(false);
 
+    // useEffect(() => {
+    //     setTimeout(() => {
+    //         setCountDown(countDown - 1);
+    //     }, 1000);
+    // });
+
     useEffect(() => {
-        setTimeout(() => {
-            setCountDown(countDown - 1);
+        setCountDown(5);
+        setIsTimeUp(false);
+    }, [resetTrigger]);
+
+
+    useEffect(() => {
+        if (isTimeUp) return;
+
+        const timer = setTimeout(() => {
+            setCountDown(prev => prev - 1);
         }, 1000);
-    });
+
+        return () => clearTimeout(timer);
+    }, [countDown, isTimeUp]);
+
 
     useEffect(() => {
         if (countDown === 0) {
             setIsTimeUp(true);
+            onTimeOut();
         }
     }, [countDown]);
 

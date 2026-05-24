@@ -14,6 +14,9 @@ function BinaryGame() {
     const [answer, setAnswer] = useState(undefined);
     const [isCorrect, setIsCorrect] = useState(undefined);
     const [isBtnDisabled, setIsBtnDisabled] = useState(true);
+    const [isTimeOut, setIsTimeOut] = useState(false);
+    const [resetTimer, setResetTimer] = useState(0);
+    const [resetScore, setResetScore] = useState(0);
 
     useEffect(() => {
         setBinaryNumber(randomBinary());
@@ -27,8 +30,19 @@ function BinaryGame() {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        const isValid = parseInt(answer).toString(2) === binaryNumber;
-        setIsCorrect(isValid);
+
+        const isSubmit = e.nativeEvent.submitter.id === 'submitBtnId' ? true : false;
+
+        if (isSubmit) {
+            const isValid = parseInt(answer).toString(2) === binaryNumber;
+            setIsCorrect(isValid);
+        } else {
+            generateNewNumber();
+            setIsTimeOut(false);
+            setResetTimer(prev => prev + 1);
+            setResetScore(prev => prev + 1);
+
+        }
     }
 
     const generateNewNumber = () => {
@@ -39,6 +53,13 @@ function BinaryGame() {
         setIsBtnDisabled(true);
     }
 
+    const handleTimeout = () => {
+        setIsCorrect(undefined);
+        setIsBtnDisabled(true);
+        setIsTimeOut(true);
+        document.getElementById('answerInputId').value = "";
+    }
+
 
     return (
         <>
@@ -46,23 +67,43 @@ function BinaryGame() {
                 <h1 style={{ fontSize: '80px' }}>{binaryNumber}</h1>
                 <div className="answer-form">
                     <form onSubmit={handleSubmit}>
-                        <input id="answerInputId" type="number" onChange={handleChange} />
-                        <button
-                            id="submitBtnId"
-                            type="submit"
-                            disabled={isBtnDisabled}
-                            style={{
-                                backgroundColor: isBtnDisabled ? '#666' : 'green',
-                                cursor: isBtnDisabled ? 'not-allowed' : 'pointer',
-                            }}>
-                            Submit
-                        </button>
+                        <input id="answerInputId" type="number" onChange={handleChange} disabled={isTimeOut} />
+                        {
+                            !isTimeOut ?
+                                <button
+                                    id="submitBtnId"
+                                    className="btnAct"
+                                    type="submit"
+                                    disabled={isBtnDisabled}
+                                    style={{
+                                        backgroundColor: isBtnDisabled ? '#666' : 'green',
+                                        cursor: isBtnDisabled ? 'not-allowed' : 'pointer',
+                                    }}>
+                                    Submit
+                                </button> :
+                                <button
+                                    id="restartBtnId"
+                                    className="btnAct"
+                                    type="submit"
+                                    style={{
+                                        backgroundColor: 'green',
+                                        cursor: 'pointer',
+                                    }}>
+                                    Restart
+                                </button>
+                        }
                     </form>
                 </div>
 
                 <div className="time-score">
-                    <CountDown />
-                    <ScoreBoard isCorrect={isCorrect} onNextRound={generateNewNumber} />
+                    <CountDown
+                        onTimeOut={handleTimeout}
+                        resetTrigger={resetTimer} />
+                    <ScoreBoard isCorrect={isCorrect}
+                        onNextRound={generateNewNumber}
+                        isTimeOut={isTimeOut}
+                        correctAns={parseInt(binaryNumber, 2)}
+                        resetTrigger={resetScore} />
                 </div>
 
             </div>
