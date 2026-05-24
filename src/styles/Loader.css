@@ -7,36 +7,65 @@
     justify-content: center;
     align-items: center;
 
+    padding: 24px;
+
     background-color: black;
     color: #00ff66;
 
     transition: opacity 0.5s ease;
     opacity: 1;
+
+    overflow: hidden;
 }
 
 .fade-out {
     opacity: 0;
 }
+
 .loader {
-    width: 90px;
-    height: 90px;
-    border: 8px dashed #00ff66;
+    width: clamp(70px, 18vw, 90px);
+    height: clamp(70px, 18vw, 90px);
+
+    border: clamp(5px, 1vw, 8px) dashed #00ff66;
+
     border-radius: 50%;
+
     animation: spin 2s linear infinite;
+
     box-shadow: 0 0 20px #00ff66;
 }
 
 .loading-text {
     margin-top: 24px;
-    letter-spacing: 3px;
+
+    font-size: clamp(16px, 4vw, 26px);
+
+    letter-spacing: clamp(1px, 0.5vw, 3px);
+
+    text-align: center;
+
     text-shadow: 0 0 10px #00ff66;
+
+    padding-inline: 12px;
 }
 
 @keyframes spin {
     from {
         transform: rotate(0deg);
     }
+
     to {
         transform: rotate(360deg);
+    }
+}
+
+@media (max-width: 480px) {
+
+    .welcome-container {
+        padding: 16px;
+    }
+
+    .loading-text {
+        margin-top: 18px;
     }
 }
