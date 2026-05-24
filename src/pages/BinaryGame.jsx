@@ -4,6 +4,45 @@ import ScoreBoard from '../components/ScoreBoard';
 import CountDown from '../components/CountDown';
 import '../styles/BinaryGame.css'
 
+function getBaseLog(base, arg) {
+    return Math.log(arg) / Math.log(base);
+}
+
+
+function formatBinaryNum(shortBinaryNumber) {
+    
+    
+    let binNumCharArr = [];
+    let binNum = parseInt(shortBinaryNumber, 2);
+    
+    if (binNum == 0) {
+        return "00000000";
+    } else if (binNum == 1){
+        return "00000001";
+    }
+
+
+    let byteSize = Math.ceil(getBaseLog(256, binNum));
+    do {
+        if (binNum % 2 == 0) {
+            binNumCharArr.push('0');
+        } else {
+            binNumCharArr.push('1');
+        }
+        binNum >>= 1; // Next bit position
+    } while (binNum > 0);
+
+    let bitsToFill = (byteSize * 8) - binNumCharArr.length;
+    for (bitsToFill; bitsToFill > 0; bitsToFill--){
+        binNumCharArr.push('0');
+    }
+
+    let binNumString = binNumCharArr.reverse().join("");
+    document.getElementById("binaryNumber").innerHTML = binNumString;
+
+}
+
+
 function BinaryGame() {
     const navigate = useNavigate();
     const location = useLocation();
@@ -83,7 +122,7 @@ function BinaryGame() {
             </button>
 
             <div className="binaryContainer">
-                <h1 id="binaryNumber">{binaryNumber}</h1>
+                <h1 id="binaryNumber"></h1>
                 <div className="answer-form">
                     <form onSubmit={handleSubmit}>
                         <div className="userInput">
