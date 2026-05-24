@@ -23,10 +23,34 @@ function BinaryGame() {
     const [resetTimer, setResetTimer] = useState(0);
     const [resetScore, setResetScore] = useState(0);
     const { vibrate } = vibrationUtils();
+    const [displayBinary, setDisplayBinary] = useState('');
 
     useEffect(() => {
         setBinaryNumber(randomBinary());
     }, []);
+
+    useEffect(() => {
+        if (!binaryNumber) return;
+
+        setDisplayBinary('');
+        let index = 0;
+
+        const interval = setInterval(() => {
+            setDisplayBinary(
+                binaryNumber.slice(0, index + 1)
+            );
+
+            index++;
+
+            if (index >= binaryNumber.length) {
+                clearInterval(interval);
+            }
+
+        }, 120);
+
+        return () => clearInterval(interval);
+
+    }, [binaryNumber]);
 
 
     const handleChange = (input) => {
@@ -89,7 +113,9 @@ function BinaryGame() {
             </button>
 
             <div className="binaryContainer">
-                <h1 id="binaryNumber">{binaryNumber}</h1>
+                <h1 id="binaryNumber" key={binaryNumber}>
+                    {binaryNumber}
+                </h1>
                 <div className="answer-form">
                     <form onSubmit={handleSubmit}>
                         <div className="userInput">

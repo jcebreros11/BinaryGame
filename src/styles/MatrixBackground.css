@@ -1,0 +1,31 @@
+.matrix-background {
+    position: fixed;
+    inset: 0;
+    z-index: 0;
+    overflow: hidden;
+    background: black;
+    pointer-events: none;
+}
+
+.matrix-column {
+    position: absolute;
+    top: -120%;
+    color: rgba(0, 255, 102, 0.18);
+    font-family: monospace;
+    font-size: 18px;
+    line-height: 1.2;
+    writing-mode: vertical-rl;
+    text-orientation: upright;
+    text-shadow: 0 0 8px rgba(0, 255, 102, 0.5);
+    animation: matrixFall linear infinite;
+}
+
+@keyframes matrixFall {
+    from {
+        transform: translateY(-100%);
+    }
+
+    to {
+        transform: translateY(220%);
+    }
+}
