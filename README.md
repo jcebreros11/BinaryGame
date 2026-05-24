@@ -4,7 +4,7 @@ A fast-paced cyber-themed React game where players convert binary numbers into b
 
 ## Live Demo
 
-🎮 https://binary-game-hqdd.vercel.app/game
+🎮 https://binary-game-hqdd.vercel.app/
 
 ---
 
