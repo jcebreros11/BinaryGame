@@ -7,10 +7,9 @@ function CountDown({ secs, onTimeOut, resetTrigger, isCorrect }) {
     const [countDown, setCountDown] = useState(secs);
     const [isTimeUp, setIsTimeUp] = useState(false);
 
-
     useEffect(() => {
         if (isCorrect) {
-            setCountDown(20);
+            setCountDown(secs);
         }
     }, [isCorrect]);
 

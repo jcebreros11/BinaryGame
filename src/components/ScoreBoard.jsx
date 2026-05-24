@@ -6,6 +6,7 @@ import '../styles/ScoreBoard.css'
 function ScoreBoard({ isCorrect, onNextRound, isTimeOut, correctAns, resetTrigger }) {
     const [score, setScore] = useState(0);
     const [showCorrectAns, setShowCorrectAns] = useState(false);
+    const [streak, setStreak] = useState(0);
 
     useEffect(() => {
         setShowCorrectAns(true);
@@ -14,16 +15,25 @@ function ScoreBoard({ isCorrect, onNextRound, isTimeOut, correctAns, resetTrigge
 
     useEffect(() => {
         setScore(0);
+        setStreak(0);
         setShowCorrectAns(false);
     }, [resetTrigger]);
 
 
     useEffect(() => {
-        if (isCorrect) {
+        if (isCorrect === true) {
             setScore(prevScore => prevScore + 1);
-            setTimeout(() => {
+            setStreak(prevStreak => prevStreak + 1);
+
+            const timer = setTimeout(() => {
                 onNextRound();
             }, 1000);
+
+            return () => clearTimeout(timer);
+        }
+
+        if (isCorrect === false) {
+            setStreak(0);
         }
     }, [isCorrect, onNextRound]);
 
@@ -39,6 +49,14 @@ function ScoreBoard({ isCorrect, onNextRound, isTimeOut, correctAns, resetTrigge
             <div>
                 <h3>Score: {score}</h3>
             </div>
+            {
+                streak >= 3 && (
+                    <div>
+                        <h3>Streak 🔥: {streak}</h3>
+                    </div>
+                )
+            }
+
             <div className="score-container" style={{ display: isCorrect !== undefined ? 'block' : 'none' }}>
                 {
                     isCorrect ?
