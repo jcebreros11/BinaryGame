@@ -1,11 +1,15 @@
 import { useState, useEffect } from 'react'
-import ScoreBoard from './ScoreBoard';
-import CountDown from './CountDown';
+import { useLocation, useNavigate } from 'react-router-dom';
+import ScoreBoard from '../components/ScoreBoard';
+import CountDown from '../components/CountDown';
 import '../styles/BinaryGame.css'
 
 function BinaryGame() {
-    const min = 0;
-    const max = 100;
+    const navigate = useNavigate();
+    const location = useLocation();
+    const difficulty = location.state?.difficulty;
+    const min = difficulty?.min ?? 0;
+    const max = difficulty?.max ?? 20;
     const randomBinary = () => {
         return Math.floor(min + Math.random() * (max + 1 - min)).toString(2);
     };
@@ -64,9 +68,20 @@ function BinaryGame() {
         document.getElementById('answerInputId').value = "";
     }
 
+    const handleSettingsClick = () => {
+        navigate('/settings');
+    };
 
     return (
         <>
+            <button
+                className="settings-icon-btn"
+                onClick={handleSettingsClick}
+                title="Change difficulty"
+            >
+                ⚙️
+            </button>
+
             <div className="binaryContainer">
                 <h1 id="binaryNumber">{binaryNumber}</h1>
                 <div className="answer-form">
@@ -103,6 +118,7 @@ function BinaryGame() {
 
                 <div className="time-score">
                     <CountDown
+                        secs={difficulty.time}
                         onTimeOut={handleTimeout}
                         resetTrigger={resetTimer}
                         isCorrect={isCorrect}

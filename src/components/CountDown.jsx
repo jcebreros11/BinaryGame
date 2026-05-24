@@ -2,9 +2,9 @@ import { useState, useEffect } from 'react'
 import '../styles/CountDown.css'
 
 
-function CountDown({ onTimeOut, resetTrigger, isCorrect }) {
+function CountDown({ secs, onTimeOut, resetTrigger, isCorrect }) {
 
-    const [countDown, setCountDown] = useState(20);
+    const [countDown, setCountDown] = useState(secs);
     const [isTimeUp, setIsTimeUp] = useState(false);
 
 
@@ -16,7 +16,7 @@ function CountDown({ onTimeOut, resetTrigger, isCorrect }) {
 
 
     useEffect(() => {
-        setCountDown(20);
+        setCountDown(secs);
         setIsTimeUp(false);
     }, [resetTrigger]);
 
