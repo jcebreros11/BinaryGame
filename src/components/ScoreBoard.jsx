@@ -7,6 +7,7 @@ function ScoreBoard({ score, isCorrect, onNextRound, isTimeOut, correctAns, rese
     const [points, setPoints] = useState(score);
     const [showCorrectAns, setShowCorrectAns] = useState(false);
     const [streak, setStreak] = useState(0);
+    const [showStreakBurst, setShowStreakBurst] = useState(false);
 
     useEffect(() => {
         setShowCorrectAns(true);
@@ -24,6 +25,14 @@ function ScoreBoard({ score, isCorrect, onNextRound, isTimeOut, correctAns, rese
         if (isCorrect === true) {
             setPoints(score);
             setStreak(prevStreak => prevStreak + 1);
+
+            if (streak >= 3) {
+                setShowStreakBurst(true);
+
+                setTimeout(() => {
+                    setShowStreakBurst(false);
+                }, 900);
+            }
 
             const timer = setTimeout(() => {
                 onNextRound();
@@ -55,7 +64,14 @@ function ScoreBoard({ score, isCorrect, onNextRound, isTimeOut, correctAns, rese
                         <h3>Streak 🔥: {streak}</h3>
                     </div>
                 )
+
             }
+
+            {showStreakBurst && (
+                <div className="streak-burst">
+                    🔥 STREAK x{streak + 1}
+                </div>
+            )}
 
             <div className="score-container" style={{ display: isCorrect !== undefined ? 'block' : 'none' }}>
                 {
