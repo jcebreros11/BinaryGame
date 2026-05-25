@@ -69,7 +69,7 @@ function ScoreBoard({ score, isCorrect, onNextRound, isTimeOut, correctAns, rese
 
             {showStreakBurst && (
                 <div className="streak-burst">
-                    🔥 STREAK x{streak + 1}
+                    🔥 STREAK x{streak}
                 </div>
             )}
 
