@@ -22,7 +22,7 @@ function ScoreBoard({ score, isCorrect, onNextRound, isTimeOut, correctAns, rese
 
     useEffect(() => {
         if (isCorrect === true) {
-            setPoints(prevScore => prevScore + 1);
+            setPoints(score);
             setStreak(prevStreak => prevStreak + 1);
 
             const timer = setTimeout(() => {
@@ -35,7 +35,7 @@ function ScoreBoard({ score, isCorrect, onNextRound, isTimeOut, correctAns, rese
         if (isCorrect === false) {
             setStreak(0);
         }
-    }, [isCorrect, onNextRound]);
+    }, [isCorrect]);
 
     return (
         <>
