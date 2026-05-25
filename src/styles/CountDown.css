@@ -1,0 +1,69 @@
+.timer-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.circle-timer {
+    position: relative;
+
+    width: 75px;
+    height: 75px;
+
+    overflow: visible;
+    background: transparent;
+}
+
+.circle-timer svg {
+    width: 75px;
+    height: 75px;
+
+    transform: rotate(-90deg);
+
+    overflow: visible;
+    display: block;
+    background: transparent;
+}
+
+.timer-bg {
+    fill: none;
+    stroke: rgba(0, 255, 102, 0.12);
+    stroke-width: 7;
+}
+
+.timer-progress {
+    fill: none;
+    stroke: #7cff7c;
+    stroke-width: 7;
+    stroke-linecap: round;
+
+    transition: stroke-dashoffset 0.85s linear;
+
+    filter:
+        drop-shadow(0 0 3px rgba(0, 255, 102, 0.4))
+        drop-shadow(0 0 6px rgba(0, 255, 102, 0.2));
+}
+
+.timer-text {
+    position: absolute;
+    inset: 0;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    width: 100%;
+    height: 100%;
+
+    color: #9dff9d;
+
+    font-size: 22px;
+    font-weight: bold;
+    line-height: 1;
+
+    text-align: center;
+
+    text-shadow:
+        0 0 8px rgba(0, 255, 102, 0.45);
+}

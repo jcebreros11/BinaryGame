@@ -1,4 +1,7 @@
 .binaryContainer{
+    z-index: 2;
+    position: relative;
+    /*background: transparent;*/
     justify-items: center;
     border: 2px solid green;
     margin: 0 auto;
@@ -10,13 +13,17 @@
         0 0 8px rgba(0,255,102,0.18);
 }
 
+.answer-form {
+    margin-bottom: 24px;
+}
 
-.time-score{
+
+.time-score {
     display: flex;
-    flex-direction: row;        
-    justify-content: space-between; 
-    align-items: flex-end;
-    gap: 40px;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    gap: 48px;
 }
 
 
@@ -137,5 +144,28 @@
         height: 46px;
 
         font-size: 20px;
+    }
+}
+
+#binaryNumber {
+    text-align: center;
+    overflow: hidden;
+    white-space: nowrap;
+    animation: revealBinary 2.2s cubic-bezier(0.22, 1, 0.36, 1);
+    color: #9dff9d;
+    text-shadow:
+        0 0 10px rgba(0,255,102,0.7),
+        0 0 20px rgba(0,255,102,0.35);
+}
+
+@keyframes revealBinary {
+    from {
+        max-width: 0;
+        opacity: 0.4;
+    }
+
+    to {
+        max-width: 100%;
+        opacity: 1;
     }
 }
