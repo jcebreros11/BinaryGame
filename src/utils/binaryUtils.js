@@ -1,13 +1,16 @@
-
-
 function binaryUtils(){
     const getBaseLog = (base, arg)  => {
         return Math.log(arg) / Math.log(base);
+    }
+
+    const getPerfectWordSize = (byteLength) => {
+
     }
     
     const  formatBinaryNum = (shortBinaryNumber) => {
         let binNumCharArr = [];
         let binNum = parseInt(shortBinaryNumber, 2);
+        const sign = shortBinaryNumber >= 0 ? 1 : -1;
     
         if (binNum == 0) {
             return "00000000";
@@ -15,8 +18,9 @@ function binaryUtils(){
             return "00000001";
         }
 
-
-        let byteSize = Math.ceil(getBaseLog(256, binNum));
+        let byteLength = Math.ceil(getBaseLog(2, Math.abs(binNum)) / 8);
+        byteLength += sign == -1 ? 1 : 0;
+        let wordSize = getPerfectWordSize(byteLength);
         
         do {
             if (binNum % 2 == 0) {
@@ -27,21 +31,19 @@ function binaryUtils(){
             binNum >>= 1; // Next bit position
         } while (binNum > 0);
 
-        let bitsToFill = (byteSize * 8) - binNumCharArr.length;
+        let bitsToFill = (byteLength * 8) - binNumCharArr.length;
+        const leading_bit = sign == 1 ? '0' : '1';
         for (bitsToFill; bitsToFill > 0; bitsToFill--){
-            binNumCharArr.push('0');
+            binNumCharArr.push(leading_bit);
         }
 
         let binNumString = binNumCharArr.reverse().join("");
         return binNumString;
-
     } 
 
     return {
         formatBinaryNum
     };
-
-
 }
 
 
