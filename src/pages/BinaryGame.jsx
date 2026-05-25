@@ -31,6 +31,9 @@ function BinaryGame() {
     const [displayBinary, setDisplayBinary] = useState('');
     const [showGameOver, setShowGameOver] = useState(false);
     const [score, setScore] = useState(0);
+    const [totalAttempts, setTotalAttempts] = useState(0);
+    const [correctAttempts, setCorrectAttempts] = useState(0);
+    const accuracy = totalAttempts === 0 ? 0 : Math.round((correctAttempts / totalAttempts) * 100);
 
     useEffect(() => {
         setBinaryNumber(randomBinary());
@@ -71,11 +74,13 @@ function BinaryGame() {
         const isSubmit = e.nativeEvent.submitter.id === 'submitBtnId' ? true : false;
 
         if (isSubmit) {
+            setTotalAttempts(prev => prev + 1);
             const isValid = formatBinaryNum(parseInt(answer).toString(2)) === binaryNumber;
             setIsCorrect(isValid);
 
             if (isValid) {
                 setScore(prev => prev + 1);
+                setCorrectAttempts(prev => prev + 1);
                 vibrate(80);
                 setResetTimer(prev => prev + 1);
             } else {
@@ -117,6 +122,9 @@ function BinaryGame() {
         setShowGameOver(false);
         setResetTimer(prev => prev + 1);
         setResetScore(prev => prev + 1);
+        setScore(0);
+        setTotalAttempts(0);
+        setCorrectAttempts(0);
     };
 
     const handleChangeDifficulty = () => {
@@ -188,6 +196,7 @@ function BinaryGame() {
                     <GameOverModal
                         score={score}
                         correctAns={parseInt(binaryNumber, 2)}
+                        accuracy={accuracy}
                         onPlayAgain={handlePlayAgain}
                         onChangeDifficulty={handleChangeDifficulty}
                     />

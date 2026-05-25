@@ -1,7 +1,6 @@
-// src/components/GameOverModal.jsx
 import '../styles/GameOverModal.css';
 
-function GameOverModal({ score, correctAns, onPlayAgain, onChangeDifficulty }) {
+function GameOverModal({ score, correctAns, accuracy, onPlayAgain, onChangeDifficulty }) {
     return (
         <div className="modal-backdrop">
             <div className="game-over-modal">
@@ -9,6 +8,7 @@ function GameOverModal({ score, correctAns, onPlayAgain, onChangeDifficulty }) {
 
                 <p>Final Score: {score}</p>
                 <p>Correct Answer: {correctAns}</p>
+                <p>Accuracy: {accuracy}%</p>
 
                 <div className="modal-actions">
                     <button onClick={onPlayAgain}>
