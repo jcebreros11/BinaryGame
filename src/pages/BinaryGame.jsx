@@ -34,6 +34,7 @@ function BinaryGame() {
     const [totalAttempts, setTotalAttempts] = useState(0);
     const [correctAttempts, setCorrectAttempts] = useState(0);
     const accuracy = totalAttempts === 0 ? 0 : Math.round((correctAttempts / totalAttempts) * 100);
+    const [showPlusOne, setShowPlusOne] = useState(false);
 
     useEffect(() => {
         setBinaryNumber(randomBinary());
@@ -80,6 +81,12 @@ function BinaryGame() {
 
             if (isValid) {
                 setScore(prev => prev + 1);
+                setShowPlusOne(true);
+
+                setTimeout(() => {
+                    setShowPlusOne(false);
+                }, 700);
+
                 setCorrectAttempts(prev => prev + 1);
                 vibrate(80);
                 setResetTimer(prev => prev + 1);
@@ -192,6 +199,11 @@ function BinaryGame() {
                         correctAns={parseInt(binaryNumber, 2)}
                         resetTrigger={resetScore} />
                 </div>
+                {showPlusOne && (
+                    <div className="plus-one">
+                        +1
+                    </div>
+                )}
                 {showGameOver && (
                     <GameOverModal
                         score={score}

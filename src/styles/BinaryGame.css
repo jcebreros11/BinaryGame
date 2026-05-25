@@ -169,3 +169,48 @@
         opacity: 1;
     }
 }
+
+
+.plus-one {
+    position: absolute;
+    right: 70px;
+    bottom: 80px;
+
+    color: #00ff66;
+
+    font-size: 28px;
+    font-weight: bold;
+
+    text-shadow:
+        0 0 10px rgba(0, 255, 102, 0.8),
+        0 0 18px rgba(0, 255, 102, 0.45);
+
+    animation: floatPlusOne 0.7s ease-out forwards;
+
+    pointer-events: none;
+}
+
+@keyframes floatPlusOne {
+    0% {
+        opacity: 0;
+        transform: translateY(10px) scale(0.8);
+    }
+
+    30% {
+        opacity: 1;
+        transform: translateY(0) scale(1.15);
+    }
+
+    100% {
+        opacity: 0;
+        transform: translateY(-35px) scale(1);
+    }
+}
+
+@media (max-width: 600px) {
+    .plus-one {
+        right: 50%;
+        bottom: 90px;
+        transform: translateX(50%);
+    }
+}
