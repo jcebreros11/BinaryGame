@@ -39,7 +39,7 @@ function formatBinaryNum(shortBinaryNumber) {
     }
 
     let binNumString = binNumCharArr.reverse().join("");
-    document.getElementById("binaryNumber").innerHTML = binNumString;
+    return binNumString;
 
 }
 
