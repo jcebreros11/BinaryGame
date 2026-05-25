@@ -1,0 +1,59 @@
+.modal-backdrop {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.72);
+    backdrop-filter: blur(6px);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 5000;
+}
+
+.game-over-modal {
+    width: min(90vw, 420px);
+    padding: 28px;
+    border-radius: 24px;
+    border: 2px solid #00ff66;
+    background: rgba(0, 0, 0, 0.92);
+    color: #9dff9d;
+    text-align: center;
+    box-shadow: 0 0 28px rgba(0, 255, 102, 0.35);
+}
+
+.game-over-modal h2 {
+    color: #ff5c5c;
+    letter-spacing: 3px;
+    text-shadow: 0 0 12px rgba(255, 0, 0, 0.55);
+}
+
+.modal-actions {
+    display: flex;
+    gap: 14px;
+    justify-content: center;
+    margin-top: 22px;
+}
+
+.modal-actions button {
+    padding: 12px 16px;
+    border-radius: 14px;
+    border: 1px solid #00ff66;
+    background: rgba(0, 255, 102, 0.1);
+    color: #9dff9d;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.modal-actions button:hover {
+    background: #00ff66;
+    color: black;
+}
+
+@media (max-width: 600px) {
+    .modal-actions {
+        flex-direction: column;
+    }
+
+    .modal-actions button {
+        width: 100%;
+    }
+}

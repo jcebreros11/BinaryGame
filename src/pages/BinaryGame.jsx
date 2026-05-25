@@ -3,45 +3,9 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import ScoreBoard from '../components/ScoreBoard';
 import CountDown from '../components/CountDown';
 import '../styles/BinaryGame.css'
+import GameOverModal from '../components/GameOverModal';
 import vibrationUtils from '../utils/vibrationUtils';
-
-function getBaseLog(base, arg) {
-    return Math.log(arg) / Math.log(base);
-}
-
-
-function formatBinaryNum(shortBinaryNumber) {
-    
-    
-    let binNumCharArr = [];
-    let binNum = parseInt(shortBinaryNumber, 2);
-    
-    if (binNum == 0) {
-        return "00000000";
-    } else if (binNum == 1){
-        return "00000001";
-    }
-
-
-    let byteSize = Math.ceil(getBaseLog(256, binNum));
-    do {
-        if (binNum % 2 == 0) {
-            binNumCharArr.push('0');
-        } else {
-            binNumCharArr.push('1');
-        }
-        binNum >>= 1; // Next bit position
-    } while (binNum > 0);
-
-    let bitsToFill = (byteSize * 8) - binNumCharArr.length;
-    for (bitsToFill; bitsToFill > 0; bitsToFill--){
-        binNumCharArr.push('0');
-    }
-
-    let binNumString = binNumCharArr.reverse().join("");
-    return binNumString;
-
-}
+import binaryUtils from '../utils/binaryUtils';
 
 
 function BinaryGame() {
@@ -50,8 +14,10 @@ function BinaryGame() {
     const difficulty = location.state?.difficulty;
     const min = difficulty?.min ?? 0;
     const max = difficulty?.max ?? 20;
+    const { formatBinaryNum } = binaryUtils();
+
     const randomBinary = () => {
-        return Math.floor(min + Math.random() * (max + 1 - min)).toString(2);
+        return formatBinaryNum(Math.floor(min + Math.random() * (max + 1 - min)).toString(2));
     };
 
     const [binaryNumber, setBinaryNumber] = useState(undefined);
@@ -63,6 +29,8 @@ function BinaryGame() {
     const [resetScore, setResetScore] = useState(0);
     const { vibrate } = vibrationUtils();
     const [displayBinary, setDisplayBinary] = useState('');
+    const [showGameOver, setShowGameOver] = useState(false);
+    const [score, setScore] = useState(0);
 
     useEffect(() => {
         setBinaryNumber(randomBinary());
@@ -103,10 +71,11 @@ function BinaryGame() {
         const isSubmit = e.nativeEvent.submitter.id === 'submitBtnId' ? true : false;
 
         if (isSubmit) {
-            const isValid = parseInt(answer).toString(2) === binaryNumber;
+            const isValid = formatBinaryNum(parseInt(answer).toString(2)) === binaryNumber;
             setIsCorrect(isValid);
 
             if (isValid) {
+                setScore(prev => prev + 1);
                 vibrate(80);
                 setResetTimer(prev => prev + 1);
             } else {
@@ -134,10 +103,23 @@ function BinaryGame() {
         setIsCorrect(undefined);
         setIsBtnDisabled(true);
         setIsTimeOut(true);
+        setShowGameOver(true);
         document.getElementById('answerInputId').value = "";
     }
 
     const handleSettingsClick = () => {
+        navigate('/settings');
+    };
+
+    const handlePlayAgain = () => {
+        generateNewNumber();
+        setIsTimeOut(false);
+        setShowGameOver(false);
+        setResetTimer(prev => prev + 1);
+        setResetScore(prev => prev + 1);
+    };
+
+    const handleChangeDifficulty = () => {
         navigate('/settings');
     };
 
@@ -194,13 +176,22 @@ function BinaryGame() {
                         resetTrigger={resetTimer}
                         isCorrect={isCorrect}
                     />
-                    <ScoreBoard isCorrect={isCorrect}
+                    <ScoreBoard
+                        score={score}
+                        isCorrect={isCorrect}
                         onNextRound={generateNewNumber}
                         isTimeOut={isTimeOut}
                         correctAns={parseInt(binaryNumber, 2)}
                         resetTrigger={resetScore} />
                 </div>
-
+                {showGameOver && (
+                    <GameOverModal
+                        score={score}
+                        correctAns={parseInt(binaryNumber, 2)}
+                        onPlayAgain={handlePlayAgain}
+                        onChangeDifficulty={handleChangeDifficulty}
+                    />
+                )}
             </div >
         </>
     )
