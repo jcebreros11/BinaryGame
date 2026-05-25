@@ -35,6 +35,7 @@ function BinaryGame() {
     const [correctAttempts, setCorrectAttempts] = useState(0);
     const accuracy = totalAttempts === 0 ? 0 : Math.round((correctAttempts / totalAttempts) * 100);
     const [showPlusOne, setShowPlusOne] = useState(false);
+    //const [highestScore, setHighestScore] = useState(0);
 
     useEffect(() => {
         setBinaryNumber(randomBinary());
@@ -111,6 +112,15 @@ function BinaryGame() {
     }
 
     const handleTimeout = () => {
+        const storageHighScore = localStorage.getItem('highScore')
+        if (storageHighScore) {
+            if (score > storageHighScore) {
+                localStorage.setItem('highScore', score);
+            }
+        } else {
+            localStorage.setItem('highScore', score);
+        }
+
         vibrate([200, 100, 200]);
         setIsCorrect(undefined);
         setIsBtnDisabled(true);

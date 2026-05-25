@@ -1,6 +1,9 @@
 import '../styles/GameOverModal.css';
 
 function GameOverModal({ score, correctAns, accuracy, onPlayAgain, onChangeDifficulty }) {
+
+    const highestScore = localStorage?.getItem('highScore');
+
     return (
         <div className="modal-backdrop">
             <div className="game-over-modal">
@@ -9,6 +12,11 @@ function GameOverModal({ score, correctAns, accuracy, onPlayAgain, onChangeDiffi
                 <p>Final Score: {score}</p>
                 <p>Correct Answer: {correctAns}</p>
                 <p>Accuracy: {accuracy}%</p>
+
+                {
+                    highestScore &&
+                    <p>Highest Score: {highestScore}</p>
+                }
 
                 <div className="modal-actions">
                     <button onClick={onPlayAgain}>
